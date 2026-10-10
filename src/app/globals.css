@@ -1,23 +1,62 @@
 @import "tailwindcss";
 
-/* シャッフルランチの色と文字 */
+/* シャッフルランチの色と文字。社内で気軽に誘い合える、やわらかい雰囲気にする */
 @theme inline {
-  --color-ground: #f3f5f4;
-  --color-ink: #17201c;
-  --color-muted: #55625c;
-  --color-line: #c9d3ce;
-  --color-line-soft: #e6ebe8;
-  --color-accent: #1f6f5c;
-  --color-accent-strong: #174f42;
-  --color-accent-soft: #e3f0eb;
-  --color-warn: #7a3f0c;
-  --color-warn-soft: #fbefe3;
-  --font-lunch: var(--font-noto-sans-jp);
-  --font-lunch-heading: var(--font-zen-kaku);
+  /* 地と文字 */
+  --color-ground: #fbf7f2; /* 画面の背景 */
+  --color-surface: #ffffff; /* カード・入力欄・ヘッダーなどの面 */
+  --color-ink: #3a2e26; /* 基本の文字 */
+  --color-muted: #6e625a; /* 補足の文字 */
+  --color-line: #e6dcd2; /* 枠線 */
+  --color-line-soft: #f1eae2; /* 区切り線 */
+
+  /* メイン：いちばん押してほしいボタン、ランチの日、決まった知らせ */
+  --color-primary: #f2a65a;
+  --color-primary-strong: #e8914a; /* 押したとき */
+  --color-primary-soft: #fdebd8; /* 薄い地 */
+  --color-primary-text: #a65a1a; /* 文字として使うとき */
+  --color-on-primary: #3a2e26; /* メインで塗った上の文字（白では読みにくいため） */
+
+  /* アクセント：選んだもの、回答済み、お知らせ */
+  --color-accent: #4a7c8c;
+  --color-accent-strong: #3a6573;
+  --color-accent-soft: #e4eef1;
+  --color-on-solid: #ffffff; /* accent や ink で塗った上の文字 */
+
+  /* 注意 */
+  --color-warn: #9a3b2e;
+  --color-warn-soft: #fbe8e4;
+
+  /* 文字の種類 */
+  --font-body: var(--font-noto-sans-jp);
+  --font-heading: var(--font-zen-maru);
+
+  /* 角丸 */
+  --radius-control: 12px; /* 入力欄・選択肢・小さな枠 */
+  --radius-card: 20px; /* カード・カレンダー・リスト */
+  --radius-frame: 24px; /* PC で表示するときの画面の枠 */
+  --radius-button: 9999px; /* ボタン（端を丸くする） */
+
+  /* 影 */
+  --shadow-card: 0 2px 8px rgb(122 84 46 / 0.08); /* カードを少し浮かせる */
+
+  /* 文字の大きさ */
+  --text-label: 12px; /* タグ、曜日、カレンダーの小さな文字 */
+  --text-label--line-height: calc(16 / 12);
+  --text-caption: 13px; /* 補足の説明 */
+  --text-small: 14px; /* カードの中の本文 */
+  --text-small--line-height: calc(20 / 14);
+  --text-body: 15px; /* 基本の本文 */
+  --text-lead: 17px; /* ヘッダーの題名、選択肢の名前、カレンダーの日付、小見出し */
+  --text-lead--line-height: 1.5;
+  --text-headline: 22px; /* 日付や人数など、大きく見せる値 */
+  --text-headline--line-height: 1.4;
+  --text-title: 24px; /* 画面の見出し */
+  --text-title--line-height: calc(32 / 24);
 }
 
 body {
   background: var(--color-ground);
   color: var(--color-ink);
-  font-family: var(--font-lunch), sans-serif;
+  font-family: var(--font-body), sans-serif;
 }

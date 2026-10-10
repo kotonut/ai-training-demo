@@ -1,3 +1,4 @@
+import { Field, TextInput } from "../../_components/form";
 import { ButtonLink, Card, PageTitle, ScreenBody, ScreenHeader } from "../../_components/ui";
 import { days } from "../../_data/dummy";
 
@@ -21,21 +22,13 @@ export default function AdminNewPage() {
         <PageTitle>回を作る</PageTitle>
         <Card className="gap-4 py-5">
           {fields.map((f) => (
-            <div key={f.id} className="flex flex-col gap-1.5">
-              <label htmlFor={f.id} className="text-[13px] text-muted">
-                {f.label}
-              </label>
-              <input
-                id={f.id}
-                type="date"
-                defaultValue={f.value}
-                className="h-11 rounded-lg border border-line bg-white px-3 text-ink"
-              />
-            </div>
+            <Field key={f.id} id={f.id} label={f.label}>
+              <TextInput id={f.id} type="date" defaultValue={f.value} />
+            </Field>
           ))}
         </Card>
 
-        <Card className="gap-2 text-sm">
+        <Card className="gap-2 text-small">
           <span className="font-bold">候補日（{candidates.length}日）</span>
           <span>{candidates.map((d) => `${d.label.replace("月", "/").replace("日", "")}(${d.dow})`).join("、")}</span>
           <span className="text-muted">

@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Calendar } from "./_components/Calendar";
-import { Badge, ButtonLink, Card } from "./_components/ui";
+import { Badge, ButtonLink, Card, ChipLink, Description, Headline, HighlightLink, Note, Tag } from "./_components/ui";
 import { answeredDayIds, days, lunch, lunchDayId, me, round } from "./_data/dummy";
 
 const states = [
@@ -29,15 +28,15 @@ export function HomeView() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <p className="m-0 text-sm text-muted">こんにちは、佐藤さん</p>
-        <span className="rounded-full border border-line bg-white px-2.5 py-0.5 text-xs">{me.role}</span>
+        <Description>こんにちは、佐藤さん</Description>
+        <Tag>{me.role}</Tag>
       </div>
 
       <div>
-        <p className="m-0 text-[13px] text-muted">
+        <Note>
           第{round.no}回・回答の締切 {round.deadline}
-        </p>
-        <p className="m-0 font-lunch-heading text-xl font-bold">{round.periodShort}</p>
+        </Note>
+        <Headline>{round.periodShort}</Headline>
       </div>
 
       <Calendar
@@ -47,8 +46,8 @@ export function HomeView() {
 
       {state === "none" && (
         <Card>
-          <Badge tone="warn">未回答</Badge>
-          <p className="m-0 text-sm">ランチできる日を選んでください。日が多いほど組みやすくなります。</p>
+          <Badge tone="primary">未回答</Badge>
+          <p className="m-0 text-small">ランチできる日を選んでください。日が多いほど組みやすくなります。</p>
           <ButtonLink href="/answer/format">候補日を選ぶ</ButtonLink>
           <ButtonLink href="/?state=skipped" variant="secondary">
             今回は休む
@@ -59,12 +58,12 @@ export function HomeView() {
       {state === "answered" && (
         <Card>
           <Badge>回答済み</Badge>
-          <p className="m-0 text-sm">
+          <p className="m-0 text-small">
             <b>対面</b>・3日
             <br />
             {answeredLabels}
           </p>
-          <p className="m-0 text-[13px] text-muted">締切までは何度でも直せます。締切のあと、運営が組み合わせを決めます。</p>
+          <Note>締切までは何度でも直せます。締切のあと、運営が組み合わせを決めます。</Note>
           <ButtonLink href="/answer/format" variant="secondary">
             回答を直す
           </ButtonLink>
@@ -76,8 +75,8 @@ export function HomeView() {
 
       {state === "skipped" && (
         <Card>
-          <Badge tone="warn">今回はお休み</Badge>
-          <p className="m-0 text-sm">締切までは、参加に戻せます。</p>
+          <Badge tone="gray">今回はお休み</Badge>
+          <p className="m-0 text-small">締切までは、参加に戻せます。</p>
           <ButtonLink href="/answer/format" variant="secondary">
             やっぱり参加する
           </ButtonLink>
@@ -85,50 +84,34 @@ export function HomeView() {
       )}
 
       {state === "matched" && (
-        <Link
+        <HighlightLink
           href="/detail"
-          className="flex items-center gap-3 rounded-xl bg-accent p-4 text-white hover:bg-accent-strong"
-        >
-          <span className="flex flex-1 flex-col">
-            <span className="text-[13px]">組み合わせが決まりました</span>
-            <span className="text-[17px] font-bold">
-              {lunch.day} 12:00〜・{lunch.format}
-            </span>
-          </span>
-          <span className="text-sm">詳細</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" />
-          </svg>
-        </Link>
+          label="組み合わせが決まりました"
+          title={`${lunch.day} 12:00〜・${lunch.format}`}
+          action="詳細"
+        />
       )}
 
       {state === "unmatched" && (
-        <Card className="bg-warn-soft! text-warn">
+        <Card tone="warn">
           <Badge tone="warn">今回は見送り</Badge>
-          <p className="m-0 text-sm">今回は条件の合うグループを作れませんでした。次の回は優先して組みます。</p>
+          <p className="m-0 text-small">今回は条件の合うグループを作れませんでした。次の回は優先して組みます。</p>
         </Card>
       )}
 
       {state === "closed" && (
         <Card>
-          <p className="m-0 text-sm text-muted">受付は締め切られました。今回は参加していません。</p>
+          <Description>受付は締め切られました。今回は参加していません。</Description>
         </Card>
       )}
 
       <nav aria-label="たたき台用" className="mt-6 flex flex-col gap-2 border-t border-dashed border-line pt-4">
-        <p className="m-0 text-xs text-muted">たたき台用：ホームの状態を切り替える</p>
+        <Note>たたき台用：ホームの状態を切り替える</Note>
         <div className="flex flex-wrap gap-2">
           {states.map((s) => (
-            <Link
-              key={s.id}
-              href={`/?state=${s.id}`}
-              aria-current={s.id === state ? "page" : undefined}
-              className={`flex min-h-11 items-center rounded-lg border px-3 text-sm ${
-                s.id === state ? "border-accent bg-accent-soft font-bold" : "border-line bg-white"
-              }`}
-            >
+            <ChipLink key={s.id} href={`/?state=${s.id}`} current={s.id === state}>
               {s.label}
-            </Link>
+            </ChipLink>
           ))}
         </div>
         <div className="flex flex-col gap-2 pt-2">

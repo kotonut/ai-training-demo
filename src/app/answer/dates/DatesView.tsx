@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Calendar } from "../../_components/Calendar";
-import { ButtonLink, PageTitle } from "../../_components/ui";
+import { ButtonLink, Description, Note, PageTitle } from "../../_components/ui";
 
 // 選んだ日は画面の中だけで持つ。保存はしない。
 export function DatesView() {
@@ -15,13 +15,11 @@ export function DatesView() {
 
   return (
     <>
-      <p className="m-0 text-[13px] text-muted">2 / 2・{format}</p>
+      <Note>2 / 2・{format}</Note>
       <PageTitle>ランチできる日を選んでください</PageTitle>
-      <p className="m-0 text-sm text-muted">
-        12:00〜13:00 に空いている日を、いくつでも。自分の予定と見比べて選んでください。
-      </p>
+      <Description>12:00〜13:00 に空いている日を、いくつでも。自分の予定と見比べて選んでください。</Description>
       <Calendar picked={picked} onToggle={toggle} />
-      <p className="m-0 text-center text-sm text-muted">{picked.length}日 選択中</p>
+      <Description className="text-center">{picked.length}日 選択中</Description>
       <ButtonLink href="/answer/done">この内容で回答する</ButtonLink>
     </>
   );

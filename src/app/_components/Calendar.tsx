@@ -14,21 +14,21 @@ export function Calendar({
   onToggle?: (id: string) => void;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-white p-3">
-      <div className="grid grid-cols-5 gap-1.5 text-center text-xs text-muted">
+    <div className="flex flex-col gap-2 rounded-card bg-surface p-3 shadow-card">
+      <div className="grid grid-cols-5 gap-1.5 text-center text-label text-muted">
         {weekdays.map((w) => (
           <div key={w}>{w}</div>
         ))}
       </div>
       <div className="grid grid-cols-5 gap-1.5">
         {days.map((d) => {
-          const base = "flex h-16 flex-col items-center justify-center rounded-lg leading-tight";
+          const base = "flex h-16 flex-col items-center justify-center rounded-control leading-tight";
 
           if (d.holiday) {
             return (
-              <div key={d.id} className={`${base} bg-ground text-muted`}>
-                <span className="text-lg font-bold">{d.num}</span>
-                <span className="text-[11px]">祝日</span>
+              <div key={d.id} className={`${base} bg-line-soft text-muted`}>
+                <span className="text-lead font-bold">{d.num}</span>
+                <span className="text-label">祝日</span>
               </div>
             );
           }
@@ -36,15 +36,15 @@ export function Calendar({
           const isLunch = d.id === lunchDayId;
           const on = picked.includes(d.id);
           const tone = isLunch
-            ? "border border-accent bg-accent text-white"
+            ? "border border-primary bg-primary text-on-primary"
             : on
-              ? "border border-accent bg-accent-soft text-ink"
-              : "border border-line bg-white text-ink";
+              ? "border-2 border-accent bg-accent-soft text-ink"
+              : "border border-line bg-surface text-ink";
           const mark = isLunch ? "ランチ" : on ? "空き" : "";
           const content = (
             <>
-              <span className="text-lg font-bold">{d.num}</span>
-              <span className="flex h-4 items-center text-[11px]">
+              <span className="text-lead font-bold">{d.num}</span>
+              <span className={`flex h-4 items-center text-label ${on && !isLunch ? "text-accent-strong" : ""}`}>
                 {on && !isLunch && onToggle ? <CheckIcon size={12} /> : mark}
               </span>
             </>

@@ -1,4 +1,14 @@
-import { ButtonLink, Card, PageTitle, ScreenBody, ScreenHeader } from "../_components/ui";
+import {
+  ButtonLink,
+  Card,
+  Description,
+  Notice,
+  PageTitle,
+  ScreenBody,
+  ScreenHeader,
+  StatTile,
+  Tag,
+} from "../_components/ui";
 import { adminStats, round } from "../_data/dummy";
 
 export const metadata = { title: "運営" };
@@ -14,21 +24,18 @@ export default function AdminPage() {
     <>
       <ScreenHeader title="運営画面" backHref="/" />
       <ScreenBody>
-        <span className="self-start rounded-full bg-ink px-2.5 py-0.5 text-xs text-white">運営</span>
+        <Tag tone="dark">運営</Tag>
         <PageTitle>第{round.no}回の組み合わせ</PageTitle>
-        <p className="m-0 text-sm text-muted">
+        <Description>
           {round.period}・締切 {round.deadline}
-        </p>
+        </Description>
 
         <div className="grid grid-cols-3 gap-2">
           {stats.map((s) => (
-            <div key={s.label} className="rounded-[10px] bg-white p-3 text-center">
-              <div className="text-xs text-muted">{s.label}</div>
-              <div className="text-[22px] font-bold">{s.value}</div>
-            </div>
+            <StatTile key={s.label} label={s.label} value={s.value} />
           ))}
         </div>
-        <Card className="gap-1 text-sm">
+        <Card className="gap-1 text-small">
           <span>
             新入社員 {adminStats.newcomers}人・迎える側 {adminStats.hosts}人
           </span>
@@ -37,9 +44,7 @@ export default function AdminPage() {
           </span>
         </Card>
 
-        <p className="m-0 rounded-lg bg-warn-soft px-3 py-2.5 text-sm text-warn">
-          実行すると回答は締め切られます。実行できるのは1回だけです。
-        </p>
+        <Notice tone="warn">実行すると回答は締め切られます。実行できるのは1回だけです。</Notice>
         <ButtonLink href="/admin/result" variant="dark">
           組み合わせを実行する
         </ButtonLink>
