@@ -1,13 +1,11 @@
 import { ButtonLink, CheckIcon, Description, PageTitle, ScreenBody, ScreenHeader } from "../../_components/ui";
 import { answeredDayIds, days, round } from "../../_data/dummy";
+import { formatDayList } from "../../../lib/days";
 
 export const metadata = { title: "回答しました" };
 
 export default function DonePage() {
-  const labels = days
-    .filter((d) => answeredDayIds.includes(d.id))
-    .map((d) => `${d.label}(${d.dow})`)
-    .join("、");
+  const labels = formatDayList(days, answeredDayIds);
 
   return (
     <>

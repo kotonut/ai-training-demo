@@ -4,12 +4,15 @@ import { useState } from "react";
 import { ChoiceGroup, Field, Select, TextInput } from "../_components/form";
 import { ButtonLink, Card, Description, Note, Notice, PageTitle } from "../_components/ui";
 import { departments, me } from "../_data/dummy";
+import { isNewcomer } from "../../lib/newcomer";
 
 const workStyles = ["主に出社", "主にリモート", "半々"];
+const joinedOn = "2026-09-01";
 
 // 入力の見た目だけ。保存はしない。
 export function RegisterForm() {
   const [work, setWork] = useState("主にリモート");
+  const newcomer = isNewcomer(joinedOn, new Date());
 
   return (
     <div className="flex flex-col gap-5">
@@ -30,12 +33,16 @@ export function RegisterForm() {
         </Field>
 
         <Field id="joined" label="入社日">
-          <TextInput id="joined" type="date" defaultValue="2026-09-01" />
+          <TextInput id="joined" type="date" defaultValue={joinedOn} />
         </Field>
 
         <ChoiceGroup legend="勤務形態" options={workStyles} value={work} onChange={setWork} />
 
-        <Notice>入社半年以内なので「新入社員」として参加します。</Notice>
+        <Notice>
+          {newcomer
+            ? "入社半年以内なので「新入社員」として参加します。"
+            : "入社半年を過ぎているので「迎える側」として参加します。"}
+        </Notice>
       </Card>
 
       <ButtonLink href="/">登録してはじめる</ButtonLink>

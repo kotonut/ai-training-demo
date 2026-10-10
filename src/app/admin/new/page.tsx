@@ -1,6 +1,7 @@
 import { Field, TextInput } from "../../_components/form";
 import { ButtonLink, Card, PageTitle, ScreenBody, ScreenHeader } from "../../_components/ui";
 import { days } from "../../_data/dummy";
+import { splitHolidays } from "../../../lib/days";
 
 export const metadata = { title: "回を作る" };
 
@@ -12,8 +13,7 @@ const fields = [
 
 // 入力の見た目だけ。保存はしない。候補日はダミーを表示する。
 export default function AdminNewPage() {
-  const candidates = days.filter((d) => !d.holiday);
-  const holidays = days.filter((d) => d.holiday);
+  const { candidates, holidays } = splitHolidays(days);
 
   return (
     <>

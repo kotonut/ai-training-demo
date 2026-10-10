@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { formatDayList } from "../lib/days";
 import { Calendar } from "./_components/Calendar";
 import { Badge, ButtonLink, Card, ChipLink, Description, Headline, HighlightLink, Note, Tag } from "./_components/ui";
 import { answeredDayIds, days, lunch, lunchDayId, me, round } from "./_data/dummy";
@@ -20,10 +21,7 @@ export function HomeView() {
   const param = useSearchParams().get("state");
   const state: State = states.some((s) => s.id === param) ? (param as State) : "none";
 
-  const answeredLabels = days
-    .filter((d) => answeredDayIds.includes(d.id))
-    .map((d) => `${d.label}(${d.dow})`)
-    .join("、");
+  const answeredLabels = formatDayList(days, answeredDayIds);
 
   return (
     <>
